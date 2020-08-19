@@ -18,6 +18,13 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
+        $dup = Cart::search(function ($cartItem, $rowId) use ($request){
+            return $cartItem->id === (int) $request->id;
+        });
+
+        if($dup->isNotEmpty()){
+            return redirect()->back()->with('msg', 'Product already in cart');
+        }
 
         // Cart::store(auth()->user()->id);
         $product = Product::find($request->id);

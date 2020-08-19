@@ -12,6 +12,14 @@ class WishListController extends Controller
     public function store(Request $request)
     {
 
+        $dup = Cart::instance('wishlist')->search(function ($cartItem, $rowId) use ($request){
+            return $cartItem->id === (int) $request->id;
+        });
+
+        if($dup->isNotEmpty()){
+            return redirect()->back()->with('msg', 'Product already in wishlist');
+        }
+
         $product = Product::find($request->id);
         Cart::instance('wishlist')->add($product, 1);
 
