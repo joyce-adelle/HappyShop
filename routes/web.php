@@ -64,6 +64,9 @@ Route::prefix('user')->group(function () {
         Route::delete('/wishlist/remove/{rowId}', 'Front\WishListController@remove')->name('userWishlist.remove');
         Route::put('/wishlist/movetocart/{rowId}', 'Front\WishListController@moveToCart')->name('userWishlist.moveToCart');
 
+        Route::get('/checkout', 'Front\CheckoutContoller@index');
+        Route::post('/checkout', 'Front\CheckoutContoller@store');
+
     });
 
     Route::get('/register', 'Front\RegistrationController@index');

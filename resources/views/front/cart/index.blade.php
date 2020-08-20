@@ -26,12 +26,11 @@
                     <tbody>
 
                         @foreach (Cart::content() as $cartItem)
-                        <span hidden>{{$product = $cartItem->model}}</span>
                         <tr>
-                            <td><img class="card-img-top" src="{{ url('uploads').'/'.$product->image}}"
-                                    alt="{{$product->image}}" style="width: 5em"> </td>
+                            <td><img class="card-img-top" src="{{ url('uploads').'/'.$cartItem->model->image}}"
+                                    alt="{{$cartItem->model->image}}" style="width: 5em"> </td>
                             <td>
-                                <strong>{{$product->name}}</strong><br> {{$product->description}}
+                                <strong>{{$cartItem->model->name}}</strong><br> {{$cartItem->model->description}}
                             </td>
 
                             <td>
@@ -52,10 +51,13 @@
                                 <select name="" id="" class="form-control" style="width: 4.7em">
                                     <option value="">1</option>
                                     <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                    <option value="">5</option>
                                 </select>
                             </td>
 
-                            <td>{{$product->price * $cartItem->qty}}</td>
+                            <td>{{$cartItem->price}}</td>
                         </tr>
 
                         @endforeach
@@ -93,8 +95,8 @@
 
             <!-- Wishlist  -->
             <div class="col-md-12">
-                <button class="btn btn-outline-dark">Continue Shopping</button>
-                <button class="btn btn-outline-info">Proceed to checkout</button>
+                <a  href="{{url('/')}}" class="btn btn-outline-dark">Continue Shopping</a>
+                <a  href="{{url('/user/checkout')}}" class="btn btn-outline-info">Proceed to checkout</a>
                 <hr>
 
             </div>
@@ -112,12 +114,11 @@
                     <tbody>
 
                         @foreach (Cart::instance('wishlist')->content() as $cartItem)
-                        <span hidden>{{$product = $cartItem->model}}</span>
                         <tr>
-                            <td><img class="card-img-top" src="{{ url('uploads').'/'.$product->image}}"
-                                    alt="{{$product->image}}" style="width: 5em"> </td>
+                            <td><img class="card-img-top" src="{{ url('uploads').'/'.$cartItem->model->image}}"
+                                    alt="{{$cartItem->model->image}}" style="width: 5em"> </td>
                             <td>
-                                <strong>{{$product->name}}</strong><br> {{$product->description}}
+                                <strong>{{$cartItem->model->name}}</strong><br> {{$cartItem->model->description}}
                             </td>
 
                             <td>
@@ -135,7 +136,7 @@
 
                             </td>
 
-                            <td>{{$product->price}}</td>
+                            <td>{{$cartItem->price}}</td>
 
                         </tr>
 
