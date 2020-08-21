@@ -4,7 +4,7 @@
 
 <div class="container">
 
-    <h2 class="mt-5"><i class="fa fa-shopping-cart"></i> Shooping Cart</h2>
+    <h2 class="mt-5"><i class="fa fa-shopping-cart"></i> Shopping Cart</h2>
     <hr>
 
     @include('message')
