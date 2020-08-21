@@ -59,6 +59,7 @@ Route::prefix('user')->group(function () {
         Route::post('/cart', 'Front\CartController@store');
         Route::delete('/cart/remove/{rowId}', 'Front\CartController@remove')->name('userCart.remove');
         Route::put('/cart/addtowishlist/{rowId}', 'Front\CartController@addToWishlist')->name('userCart.addToWishlist');
+        Route::patch('/cart/update/{rowId}', 'Front\CartController@update')->name('userCart.updateQuantity');
 
         Route::post('/wishlist', 'Front\WishListController@store');
         Route::delete('/wishlist/remove/{rowId}', 'Front\WishListController@remove')->name('userWishlist.remove');

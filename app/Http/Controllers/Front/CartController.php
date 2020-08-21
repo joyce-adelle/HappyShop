@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart as Cart;
-
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -48,4 +48,20 @@ class CartController extends Controller
 
         return redirect()->back()->with('msg', $product->name . ' has been added to wishlist');
     }
+
+    public function update(Request $request, $id){
+
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'required|numeric|between: 1,5'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('errors','Quantity must be between 1 and 5');
+        }
+
+        Cart::update($id, $request->quantity);
+
+        return redirect()->back()->with('msg','Quantity has been updated');
+    }
+
 }

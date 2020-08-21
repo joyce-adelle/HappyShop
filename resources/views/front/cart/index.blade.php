@@ -4,10 +4,14 @@
 
 <div class="container">
 
-    @include('message')
-
     <h2 class="mt-5"><i class="fa fa-shopping-cart"></i> Shooping Cart</h2>
     <hr>
+
+    @include('message')
+
+    @if ( session()->has('errors') )
+        <div class="alert alert-warning">{{ session()->get('errors') }}</div>
+    @endif
 
     @if (Cart::count() == 0)
     <h4 class="mt-5">No products in Shopping Cart</h4>
@@ -48,16 +52,26 @@
                             </td>
 
                             <td>
-                                <select name="" id="" class="form-control" style="width: 4.7em">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                </select>
+                                <div class="btn-group">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        {{$cartItem->qty}}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @for ($i = 1; $i <= 5; $i++) <form
+                                            action="{{route('userCart.updateQuantity', $cartItem->rowId)}}"
+                                            method="POST">
+                                            @csrf
+                                            @method('patch')
+                                            <input type="hidden" name="quantity" value="{{$i}}">
+                                            <button class="dropdown-item {{$i == $cartItem->qty ? 'active' : ''}}"
+                                                type="submit">{{$i}}</button>
+                                            </form>
+                                            @endfor
+                                    </div>
+                                </div>
                             </td>
-
-                            <td>{{$cartItem->price}}</td>
+                            <td>{{$cartItem->total()}}</td>
                         </tr>
 
                         @endforeach
@@ -95,8 +109,8 @@
 
             <!-- Wishlist  -->
             <div class="col-md-12">
-                <a  href="{{url('/')}}" class="btn btn-outline-dark">Continue Shopping</a>
-                <a  href="{{url('/user/checkout')}}" class="btn btn-outline-info">Proceed to checkout</a>
+                <a href="{{url('/')}}" class="btn btn-outline-dark">Continue Shopping</a>
+                <a href="{{url('/user/checkout')}}" class="btn btn-outline-info">Proceed to checkout</a>
                 <hr>
 
             </div>
